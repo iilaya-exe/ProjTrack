@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABI Project Tracker &mdash; Dashboard</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="db-body">
+
+  <!-- ==============================
+       HEADER
+  ============================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a class="header-logo-link" href="" onclick="location.reload();return false;" title="Refresh page">
+          <img class="header-logo" src="Abi-Horizontal-Stack-Full-Color-RGB-1064px_72ppi-removebg-preview.png" alt="Actuate Builders Inc." />
+        </a>
+        <div class="header-logo-divider"></div>
+        <div>
+          <div class="header-title" id="db-proj-name">Loading&hellip;</div>
+          <div class="header-subtitle" id="db-proj-code"></div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <a href="projects.html" class="nav-link-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          All Projects
+        </a>
+        <a href="#" class="nav-link-btn" id="db-tracker-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Project Tracker
+        </a>
+        <span class="header-badge">DASHBOARD</span>
+        <span class="current-date" id="current-date"></span>
+        <div class="auth-slot" id="auth-slot"></div>
+      </div>
+    </div>
+    <div class="team-nav-bar">
+      <div class="team-nav-inner" style="justify-content:flex-end; gap:8px;">
+        <span style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;">Overview</span>
+        <span class="team-divider"></span>
+        <span style="font-size:.7rem;color:rgba(255,255,255,.5);">Long Lead Items Summary</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==============================
+       DASHBOARD BODY
+  ============================== -->
+  <main class="db-container">
+
+    <!-- ==========================================
+         ROW A — PROJECT IDENTITY + QUICK STATS
+    ========================================== -->
+    <div class="db-row db-row-identity">
+
+      <!-- Project Identity Card -->
+      <div class="db-identity-card">
+        <div class="db-identity-top">
+          <div class="db-proj-badge">PROJECT</div>
+          <div class="db-proj-name" id="db-identity-name">—</div>
+          <div class="db-proj-code" id="db-identity-code">—</div>
+        </div>
+        <div class="db-identity-meta">
+          <div class="db-id-client" id="db-id-client"></div>
+          <div class="db-id-meta-row">
+            <span class="db-id-status-badge" id="db-id-status"></span>
+            <span class="db-id-start" id="db-id-start"></span>
+          </div>
+          <div class="db-id-budget-wrap" id="db-id-budget-wrap">
+            <div class="db-id-budget-hd">
+              <span class="db-id-budget-lbl">Budget Utilisation</span>
+              <span class="db-id-budget-pct" id="db-id-budget-pct">—</span>
+            </div>
+            <div class="db-id-budget-track">
+              <div class="db-id-budget-fill" id="db-id-budget-fill" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="db-identity-stats">
+          <div class="db-id-stat">
+            <span class="db-id-num" id="db-stat-po-count">—</span>
+            <span class="db-id-lbl">With P.O.</span>
+          </div>
+          <div class="db-id-divider"></div>
+          <div class="db-id-stat">
+            <span class="db-id-num endorsed" id="db-stat-end-count">—</span>
+            <span class="db-id-lbl">Endorsed</span>
+          </div>
+          <div class="db-id-divider"></div>
+          <div class="db-id-stat">
+            <span class="db-id-num nocomm" id="db-stat-nocomm">—</span>
+            <span class="db-id-lbl">No Commercial Endorsement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status of Endorsement Panel -->
+      <div class="db-endorse-panel">
+        <div class="db-panel-header endorse-hdr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          Status of Endorsement
+        </div>
+        <div class="db-endorse-grid" id="db-endorse-grid">
+          <!-- populated by dashboard.js -->
+        </div>
+      </div>
+
+      <!-- Endorsed Amount Panel -->
+      <div class="db-amount-panel">
+        <div class="db-panel-header amount-hdr">
+          <span style="font-size:1.05rem;font-weight:800;line-height:1;opacity:.9;">₱</span>
+          Endorsed Amounts
+        </div>
+        <div class="db-amount-list">
+          <div class="db-amount-item" id="db-amt-item-budget">
+            <div class="db-a-label">Total Budget Allocation</div>
+            <div class="db-a-value budget" id="db-amt-budget">—</div>
+          </div>
+          <div class="db-amount-sep"></div>
+          <div class="db-amount-item highlight" id="db-amt-item-endorsed">
+            <div class="db-a-label">Running Endorsed Amount</div>
+            <div class="db-a-value endorsed" id="db-amt-endorsed">—</div>
+          </div>
+          <div class="db-amount-sep"></div>
+          <div class="db-amount-item" id="db-amt-item-balance">
+            <div class="db-a-label">Balance for Endorsement</div>
+            <div class="db-a-value balance" id="db-amt-balance">—</div>
+          </div>
+        </div>
+        <!-- Utilisation bar -->
+        <div class="db-util-wrap">
+          <div class="db-util-label">
+            <span>Budget Utilisation</span>
+            <span class="db-util-pct" id="db-util-pct">—</span>
+          </div>
+          <div class="db-util-track">
+            <div class="db-util-fill" id="db-util-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PO / Savings Panel -->
+      <div class="db-po-panel">
+        <div class="db-panel-header po-hdr">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+          Purchase Orders
+        </div>
+        <div class="db-po-main">
+          <div class="db-po-item big" id="db-po-item-total">
+            <div class="db-po-label">Total PO Amount</div>
+            <div class="db-po-value" id="db-po-amt">—</div>
+          </div>
+          <div class="db-po-sep"></div>
+          <div class="db-po-item" id="db-po-item-savings">
+            <div class="db-po-label">Total Savings<br/><span style="font-size:.68rem;opacity:.8;">(Endorsed vs PO)</span></div>
+            <div class="db-po-value savings" id="db-savings-amt">—</div>
+          </div>
+        </div>
+        <!-- Savings progress -->
+        <div class="db-util-wrap">
+          <div class="db-util-label">
+            <span>PO vs Endorsed</span>
+            <span class="db-util-pct" id="db-po-pct">—</span>
+          </div>
+          <div class="db-util-track">
+            <div class="db-util-fill po" id="db-po-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /db-row-identity -->
+
+    <!-- ==========================================
+         ROW B — KPI RINGS
+    ========================================== -->
+    <div class="db-row db-row-kpi" id="db-kpi-row">
+      <!-- populated by dashboard.js -->
+    </div><!-- /db-row-kpi -->
+
+    <!-- ==========================================
+         ROW C — FINANCIAL BREAKDOWN
+    ========================================== -->
+    <div class="db-row db-row-finance">
+
+      <!-- Budget vs Endorsed breakdown -->
+      <div class="db-finance-card span2">
+        <div class="db-finance-hdr">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          Financial Breakdown
+        </div>
+        <div class="db-finance-bars" id="db-finance-bars">
+          <!-- populated by dashboard.js -->
+        </div>
+      </div>
+
+      <!-- Long Lead Items Detail -->
+      <div class="db-finance-card span2">
+        <div class="db-finance-hdr">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+          Long Lead Items Detail
+        </div>
+        <div class="db-ll-list" id="db-ll-list">
+          <!-- populated by dashboard.js -->
+        </div>
+      </div>
+
+    </div><!-- /db-row-finance -->
+
+    <!-- ==========================================
+         ROW D — SAVINGS TABLE
+    ========================================== -->
+    <div class="db-row db-row-savings">
+      <div class="db-savings-card">
+        <div class="db-finance-hdr">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+          Savings Summary
+        </div>
+        <table class="db-savings-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Trade</th>
+              <th>Vendor</th>
+              <th>Budget</th>
+              <th>Endorsed Amt</th>
+              <th>Savings (B vs E)</th>
+              <th>PO Amount</th>
+              <th>Savings (E vs PO)</th>
+            </tr>
+          </thead>
+          <tbody id="db-savings-tbody">
+            <!-- populated by dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /db-row-savings -->
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    ABI Project Tracker &nbsp;&bull;&nbsp; <span id="db-footer-proj"></span> &nbsp;&bull;&nbsp;
+    <a href="projects.html" style="color:var(--text-light);text-decoration:none;">All Projects &rarr;</a>
+  </footer>
+
+  <script src="js/backend.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

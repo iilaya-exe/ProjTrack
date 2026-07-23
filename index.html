@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABI Project Tracker &mdash; Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ==============================
+       HEADER + TEAM NAV
+  ============================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a class="header-logo-link" href="" onclick="location.reload();return false;" title="Refresh page">
+          <img class="header-logo" src="Abi-Horizontal-Stack-Full-Color-RGB-1064px_72ppi-removebg-preview.png" alt="Actuate Builders Inc." />
+        </a>
+        <div class="header-logo-divider"></div>
+        <div>
+          <div class="header-title" id="proj-name">Loading&hellip;</div>
+          <div class="header-subtitle" id="proj-code">Loading&hellip;</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <a href="projects.html" class="nav-link-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          All Projects
+        </a>
+        <a href="#" class="nav-link-btn" id="dashboard-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          Dashboard
+        </a>
+        <span class="header-badge">TRACKER</span>
+        <span class="current-date" id="current-date"></span>
+        <div class="auth-slot" id="auth-slot"></div>
+      </div>
+    </div>
+
+    <!-- Team Switcher -->
+    <div class="team-nav-bar">
+      <div class="team-nav-inner">
+        <button class="team-btn active" data-team="commercial">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Commercial
+        </button>
+        <button class="team-btn" data-team="procurement">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/><line x1="9" y1="13" x2="15" y2="13"/>
+            <line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          Procurement Management
+        </button>
+        <div class="team-divider"></div>
+        <span class="team-label" id="team-label-display">Commercial View</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==============================
+       MAIN CONTENT
+  ============================== -->
+  <main class="container">
+
+    <!-- Summary Cards: Commercial -->
+    <div class="summary-grid" id="cards-commercial">
+      <div class="summary-card blue">
+        <div class="card-label">Total Budget</div>
+        <div class="card-value small" id="stat-budget">—</div>
+        <div class="card-sub">Total allocated budget</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/></svg>
+        </div>
+      </div>
+      <div class="summary-card amber">
+        <div class="card-label">Running Endorsed Amount</div>
+        <div class="card-value small" id="stat-endorsed">—</div>
+        <div class="card-sub">Total endorsed (VAT-inc)</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </div>
+      </div>
+      <div class="summary-card teal">
+        <div class="card-label">Savings (Budget vs Endorsed)</div>
+        <div class="card-value small" id="stat-savings-comm">—</div>
+        <div class="card-sub">Budget less endorsed amount</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+        </div>
+      </div>
+      <div class="summary-card sky" data-filter-tab="all" title="Click to show all items">
+        <div class="card-label">Total Items</div>
+        <div class="card-value" id="stat-items">—</div>
+        <div class="card-sub">Line items in tracker</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+      </div>
+      <div class="summary-card purple" data-filter-tab="endorsed" title="Click to show endorsed items">
+        <div class="card-label">Endorsed Items</div>
+        <div class="card-value" id="stat-endorsed-count">—</div>
+        <div class="card-sub">Endorsed / For endorsement</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20,6 9,17 4,12"/></svg>
+        </div>
+      </div>
+      <div class="summary-card red" data-filter-tab="long-lead" title="Click to show long lead items">
+        <div class="card-label">Long Lead Items</div>
+        <div class="card-value" id="stat-long-lead">—</div>
+        <div class="card-sub">Items flagged as long lead</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Cards: Procurement -->
+    <div class="summary-grid hidden" id="cards-procurement">
+      <div class="summary-card green">
+        <div class="card-label">Total PO Amount</div>
+        <div class="card-value small" id="stat-po">—</div>
+        <div class="card-sub">Purchase orders issued</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        </div>
+      </div>
+      <div class="summary-card orange">
+        <div class="card-label">Savings (Endorsed vs PO)</div>
+        <div class="card-value small" id="stat-savings">—</div>
+        <div class="card-sub">Savings vs endorsed amount</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+        </div>
+      </div>
+      <div class="summary-card sky" data-filter-tab="with-po" title="Click to show items with PO">
+        <div class="card-label">Items With PO</div>
+        <div class="card-value" id="stat-with-po">—</div>
+        <div class="card-sub">Items with purchase orders</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        </div>
+      </div>
+      <div class="summary-card blue">
+        <div class="card-label">Total Items</div>
+        <div class="card-value" id="stat-items-proc">—</div>
+        <div class="card-sub">Line items in tracker</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+      </div>
+      <div class="summary-card teal">
+        <div class="card-label">Total Endorsed Amt</div>
+        <div class="card-value small" id="stat-endorsed-proc">—</div>
+        <div class="card-sub">Running endorsed amount</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2"/></svg>
+        </div>
+      </div>
+      <div class="summary-card amber" data-filter-status="pending-inv" title="Click to show pending invoices">
+        <div class="card-label">Pending Invoices</div>
+        <div class="card-value" id="stat-pending-inv">—</div>
+        <div class="card-sub">Items with PO but no invoice</div>
+        <div class="card-icon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Search scope, trade, vendor, PO No&hellip;"
+          title="Search · press / to focus"
+        />
+      </div>
+
+      <select id="trade-filter" class="filter-select">
+        <option value="">All Trades</option>
+      </select>
+
+      <select id="status-filter" class="filter-select">
+        <option value="">All Statuses</option>
+        <option value="long-lead">Long Lead</option>
+        <option value="with-po">With PO</option>
+        <option value="endorsed">Endorsed</option>
+        <option value="pending">Pending</option>
+        <option value="overdue">Overdue</option>
+        <option value="due-soon">Due Soon (14 days)</option>
+        <option value="pending-inv">Pending Invoice</option>
+        <option value="empty">Empty (No Trade)</option>
+      </select>
+
+      <div class="toolbar-divider"></div>
+
+      <button class="btn" id="clear-filters">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Clear
+      </button>
+
+      <button class="btn btn-primary" id="export-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Excel
+      </button>
+
+      <button class="btn btn-outline" id="import-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Import Excel
+      </button>
+
+      <button class="btn btn-primary" id="add-item-btn" title="Add Item · press N">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Item
+      </button>
+
+      <span class="result-count" id="result-count">Loading&hellip;</span>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-section">
+      <div class="table-tabs" id="table-tabs">
+        <button class="tab-btn active" data-tab="all">All Items <span class="tab-count" id="tcount-all"></span></button>
+        <button class="tab-btn" data-tab="long-lead">
+          <span class="status-dot lead" style="width:6px;height:6px;"></span>Long Lead <span class="tab-count" id="tcount-long-lead"></span>
+        </button>
+        <button class="tab-btn" data-tab="with-po">With PO <span class="tab-count" id="tcount-with-po"></span></button>
+        <button class="tab-btn" data-tab="endorsed">Endorsed <span class="tab-count" id="tcount-endorsed"></span></button>
+        <button class="tab-btn" data-tab="pending">Pending <span class="tab-count" id="tcount-pending"></span></button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="main-table">
+          <thead id="table-head"></thead>
+          <tbody id="items-tbody">
+            <tr>
+              <td colspan="20" style="text-align:center;padding:3rem;color:var(--text-muted);">
+                Loading data&hellip;
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-bar" id="pagination-bar" style="display:none"></div>
+    </div>
+
+  </main>
+
+  <!-- ==============================
+       FOOTER
+  ============================== -->
+  <footer class="site-footer" id="tracker-footer"></footer>
+
+  <!-- ==============================
+       MODAL
+  ============================== -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-no" id="modal-no">Item #—</div>
+          <div class="modal-title" id="modal-title">—</div>
+        </div>
+        <button class="modal-close" id="modal-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer modal-footer-col">
+        <input type="text" id="save-note" class="form-input save-note-input" placeholder="Reason for change (optional — shown in history)…" maxlength="200" autocomplete="off" style="display:none" />
+        <div class="modal-footer-btns">
+          <button class="btn" id="modal-close-btn">Close</button>
+          <button class="btn btn-outline" id="modal-dup-btn" style="display:none" title="Clone this item as a new line item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Duplicate
+          </button>
+          <button class="btn btn-primary" id="modal-save-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================
+       ADD ITEM MODAL
+  ============================== -->
+  <div class="modal-overlay" id="add-item-overlay" role="dialog" aria-modal="true">
+    <div class="modal add-item-modal">
+
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-no">New Line Item</div>
+          <div class="modal-title">Add Material / Scope Item</div>
+        </div>
+        <button class="modal-close" id="ai-close">&#x2715;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="add-item-form" novalidate>
+
+          <!-- General -->
+          <div class="ai-section">
+            <div class="ai-section-title">General</div>
+            <div class="form-row two-col">
+              <div class="form-group required">
+                <label class="form-label" for="ai-trade">Trade</label>
+                <input class="form-input" id="ai-trade" type="text" placeholder="e.g. Mechanical Works" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-priority">Priority</label>
+                <select class="form-input" id="ai-priority">
+                  <option value="">— None —</option>
+                  <option value="HIGH">High</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="LOW">Low</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group required">
+                <label class="form-label" for="ai-scope">Scope of Works</label>
+                <textarea class="form-input form-textarea" id="ai-scope" rows="2" placeholder="Describe the scope of work…"></textarea>
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-budget">Budget Allocation (₱)</label>
+                <input class="form-input" id="ai-budget" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-date-needed">Date Needed On-Site</label>
+                <input class="form-input" id="ai-date-needed" type="date" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-timeline">Vendor's Timeline</label>
+                <input class="form-input" id="ai-timeline" type="text" placeholder="e.g. 12 weeks delivery" />
+              </div>
+              <div class="form-group ai-checkbox-row">
+                <input type="checkbox" id="ai-long-lead" />
+                <label for="ai-long-lead">Flag as Long Lead Item</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Commercial -->
+          <div class="ai-section">
+            <div class="ai-section-title commercial">Commercial</div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-endorsed-vendor">Endorsed Vendor / Subcon</label>
+                <input class="form-input" id="ai-endorsed-vendor" type="text" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-endorsement-date">Endorsement Date</label>
+                <input class="form-input" id="ai-endorsement-date" type="date" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-endorsed-amount">Endorsed Amount VAT-Inc (₱)</label>
+                <input class="form-input" id="ai-endorsed-amount" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-approved-vendor">Approved Vendor</label>
+                <input class="form-input" id="ai-approved-vendor" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Procurement -->
+          <div class="ai-section">
+            <div class="ai-section-title procurement">Procurement Management</div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-awarded-vendor">Awarded Vendor</label>
+                <input class="form-input" id="ai-awarded-vendor" type="text" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-pr-no">PR / Endorsement No.</label>
+                <input class="form-input" id="ai-pr-no" type="text" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-negotiated">Negotiated Proposal (₱)</label>
+                <input class="form-input" id="ai-negotiated" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-po-amount">PO Amount (₱)</label>
+                <input class="form-input" id="ai-po-amount" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-po-no">PO No.</label>
+                <input class="form-input" id="ai-po-no" type="text" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-date-po">Date of PO</label>
+                <input class="form-input" id="ai-date-po" type="date" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-invoice-no">Invoice No. / DR No.</label>
+                <input class="form-input" id="ai-invoice-no" type="text" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-invoice-date">Invoice Date</label>
+                <input class="form-input" id="ai-invoice-date" type="date" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-rfp-no">RFP No.</label>
+                <input class="form-input" id="ai-rfp-no" type="text" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-rfp-date">RFP Date</label>
+                <input class="form-input" id="ai-rfp-date" type="date" />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="form-group">
+                <label class="form-label" for="ai-rfp-amount">RFP Amount (₱)</label>
+                <input class="form-input" id="ai-rfp-amount" type="number" step="0.01" min="0" placeholder="0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ai-due-date">Due Date</label>
+                <input class="form-input" id="ai-due-date" type="date" />
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <span class="form-error" id="ai-error"></span>
+        <button class="btn" id="ai-cancel">Cancel</button>
+        <button class="btn btn-primary" id="ai-save">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Item
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="cell-tooltip"></div>
+
+  <!-- BULK ACTION BAR -->
+  <div class="bulk-bar" id="bulk-bar">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    <span id="bulk-count">0 selected</span>
+    <div class="bulk-sep"></div>
+    <button class="btn bulk-btn" onclick="bulkExport()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export
+    </button>
+    <button class="btn bulk-btn bulk-btn-danger" onclick="bulkDelete()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3,6 5,6 21,6"/><path d="M19,6l-1,14a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2L5,6"/><path d="M10,11v6"/><path d="M14,11v6"/></svg>
+      Delete
+    </button>
+    <button class="btn bulk-btn bulk-btn-ghost" onclick="clearSelection()">&#x2715; Deselect</button>
+  </div>
+
+  <!-- ==============================
+       IMPORT EXCEL MODAL
+  ============================== -->
+  <div class="modal-overlay" id="import-overlay" role="dialog" aria-modal="true">
+    <div class="modal import-modal">
+
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-no">Import Data</div>
+          <div class="modal-title">Import from Excel</div>
+        </div>
+        <button class="modal-close" id="imp-close">&#x2715;</button>
+      </div>
+
+      <div class="modal-body" id="imp-modal-body">
+
+        <!-- Step 1: Drop / Browse -->
+        <div id="imp-step-upload">
+          <div class="imp-dropzone" id="imp-dropzone">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="imp-dz-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <div class="imp-dz-title">Drop your Excel file here</div>
+            <div class="imp-dz-sub" id="imp-dz-sub">or click to browse &nbsp;(.xlsx / .xls)</div>
+            <input type="file" id="imp-file-input" accept=".xlsx,.xls" style="display:none" />
+          </div>
+          <p class="imp-hint">Works with files exported from this tracker, or any Excel spreadsheet using matching column names.</p>
+        </div>
+
+        <!-- Step 2: Preview -->
+        <div id="imp-step-preview" class="hidden">
+          <div class="imp-info-bar" id="imp-info-bar"></div>
+          <div class="imp-top-row">
+            <div class="imp-sheet-row" id="imp-sheet-row">
+              <span class="imp-sheet-label">Sheet:</span>
+              <select class="form-input imp-sheet-sel" id="imp-sheet-select"></select>
+            </div>
+            <button class="btn imp-reselect" id="imp-reselect">&#8592; Choose different file</button>
+          </div>
+          <div class="imp-preview-wrap">
+            <table id="imp-preview-table"></table>
+          </div>
+          <div class="imp-mode-section">
+            <div class="imp-mode-title">Import Mode</div>
+            <label class="imp-mode-opt">
+              <input type="radio" name="imp-mode" value="merge" checked />
+              <div>
+                <strong>Merge</strong>
+                <span>Update existing items (matched by item #), add any new ones</span>
+              </div>
+            </label>
+            <label class="imp-mode-opt">
+              <input type="radio" name="imp-mode" value="add-only" />
+              <div>
+                <strong>Add New Items Only</strong>
+                <span>Skip rows that already exist in the tracker; only insert new ones</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 3: Progress -->
+        <div id="imp-step-progress" class="hidden">
+          <div class="imp-progress-text" id="imp-progress-text">Importing items&hellip;</div>
+          <div class="imp-progress-bar">
+            <div class="imp-progress-fill" id="imp-progress-fill" style="width:0%"></div>
+          </div>
+          <div class="imp-progress-sub" id="imp-progress-sub"></div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <span class="form-error" id="imp-error"></span>
+        <button class="btn" id="imp-cancel">Cancel</button>
+        <button class="btn btn-primary" id="imp-action" disabled>Select a file first</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HISTORY MODAL -->
+  <div class="modal-overlay" id="history-overlay" role="dialog" aria-modal="true">
+    <div class="modal history-modal">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div class="modal-no">Change History</div>
+          <div class="modal-title" id="history-title">—</div>
+        </div>
+        <button class="modal-close" id="history-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="modal-body" id="history-body"></div>
+      <div class="modal-footer">
+        <button class="btn" id="history-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/exceljs.min.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

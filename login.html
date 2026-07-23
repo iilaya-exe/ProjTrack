@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In &mdash; ABI Project Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body class="login-body">
+
+  <!-- ── Full-page arc ring decoration ── -->
+  <div class="lbg" aria-hidden="true">
+    <!-- Top-left corner -->
+    <div class="lr lr-tl-1"></div>
+    <div class="lr lr-tl-2"></div>
+    <div class="lr lr-tl-3"></div>
+    <!-- Top-center edge -->
+    <div class="lr lr-tc-1"></div>
+    <div class="lr lr-tc-2"></div>
+    <!-- Top-right corner -->
+    <div class="lr lr-tr-1"></div>
+    <div class="lr lr-tr-2"></div>
+    <div class="lr lr-tr-3"></div>
+    <!-- Left-center edge -->
+    <div class="lr lr-lc-1"></div>
+    <div class="lr lr-lc-2"></div>
+    <!-- Right-center edge -->
+    <div class="lr lr-rc-1"></div>
+    <div class="lr lr-rc-2"></div>
+    <div class="lr lr-rc-3"></div>
+    <!-- Bottom-left corner -->
+    <div class="lr lr-bl-1"></div>
+    <div class="lr lr-bl-2"></div>
+    <div class="lr lr-bl-3"></div>
+    <!-- Bottom-center edge -->
+    <div class="lr lr-bc-1"></div>
+    <div class="lr lr-bc-2"></div>
+    <!-- Bottom-right corner -->
+    <div class="lr lr-br-1"></div>
+    <div class="lr lr-br-2"></div>
+    <div class="lr lr-br-3"></div>
+  </div>
+
+  <!-- ── Left panel: Branding ── -->
+  <div class="login-left">
+    <div class="login-left-inner">
+      <img class="login-left-logo"
+           src="Abi-Horizontal-Stack-Full-Color-RGB-1064px_72ppi-removebg-preview.png"
+           alt="Actuate Builders Inc." />
+      <div class="login-left-rule"></div>
+      <p class="login-left-desc">Procurement &amp; Commercial<br>Management System</p>
+    </div>
+    <footer class="login-left-foot">Internal Use &nbsp;&bull;&nbsp; Actuate Builders Inc.</footer>
+  </div>
+
+  <!-- ── Right panel: Form ── -->
+  <div class="login-right">
+    <div class="login-form-wrap">
+
+      <div class="login-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        ABI Project Tracker
+      </div>
+
+      <h1 class="login-title">Sign In</h1>
+      <p class="login-sub">Enter your credentials to continue</p>
+
+      <div class="lf-divider"></div>
+
+      <form id="login-form" novalidate>
+
+        <div class="lf-group">
+          <label class="lf-label" for="lf-username">Username</label>
+          <div class="lf-input-wrap">
+            <svg class="lf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-3.87 3.582-7 8-7s8 3.13 8 7" stroke-linecap="round"/>
+            </svg>
+            <input type="text" id="lf-username" class="lf-input"
+                   autocomplete="username" autofocus spellcheck="false"
+                   placeholder="your.username" />
+          </div>
+        </div>
+
+        <div class="lf-group">
+          <label class="lf-label" for="lf-password">Password</label>
+          <div class="lf-input-wrap">
+            <svg class="lf-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2.5"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round"/>
+            </svg>
+            <input type="password" id="lf-password" class="lf-input lf-pw"
+                   autocomplete="current-password" placeholder="••••••••" />
+            <button type="button" class="lf-eye" id="lf-eye" aria-label="Toggle password visibility">
+              <svg id="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg id="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="display:none">
+                <path d="M17.94 17.94A10.1 10.1 0 0 1 12 20C5 20 1 12 1 12a18.5 18.5 0 0 1 5.06-5.94M9.9 4.24A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-linecap="round"/>
+                <line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="lf-error" id="lf-error" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lf-error-icon" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <circle cx="12" cy="16" r=".5" fill="currentColor"/>
+          </svg>
+          <span id="lf-error-text"></span>
+        </div>
+
+        <button type="submit" class="lf-btn" id="lf-submit">
+          <span class="lf-btn-label">Sign In</span>
+          <svg class="lf-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12,5 19,12 12,19"/>
+          </svg>
+          <svg class="lf-btn-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none">
+            <circle cx="12" cy="12" r="9" stroke-opacity=".2"/>
+            <path d="M12 3a9 9 0 0 1 9 9" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+      </form>
+
+      <p class="login-foot">&copy; 2025 Actuate Builders Inc.</p>
+    </div>
+  </div>
+
+  <script src="js/backend.js"></script>
+  <script>
+    'use strict';
+
+    LocalDB.fetch('php/auth.php?action=me')
+      .then(r => r.json())
+      .then(j => {
+        if (j && j.success) {
+          const p = new URLSearchParams(window.location.search);
+          window.location.replace(p.get('next') || 'projects.html');
+        }
+      })
+      .catch(() => {});
+
+    document.getElementById('lf-eye').addEventListener('click', () => {
+      const inp = document.getElementById('lf-password');
+      const isHidden = inp.type === 'password';
+      inp.type = isHidden ? 'text' : 'password';
+      document.getElementById('eye-open').style.display   = isHidden ? 'none' : '';
+      document.getElementById('eye-closed').style.display = isHidden ? '' : 'none';
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('lf-username').value.trim();
+      const password = document.getElementById('lf-password').value;
+      const errEl    = document.getElementById('lf-error');
+      const errTxt   = document.getElementById('lf-error-text');
+      const btn      = document.getElementById('lf-submit');
+
+      errEl.style.display = 'none';
+
+      if (!username || !password) {
+        errTxt.textContent  = 'Please enter your username and password.';
+        errEl.style.display = 'flex';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.querySelector('.lf-btn-label').textContent   = 'Signing in…';
+      btn.querySelector('.lf-btn-arrow').style.display = 'none';
+      btn.querySelector('.lf-btn-spin').style.display  = '';
+
+      try {
+        const res  = await LocalDB.fetch('php/auth.php?action=login', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ username, password }),
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.error || 'Sign in failed.');
+
+        const p = new URLSearchParams(window.location.search);
+        window.location.replace(p.get('next') || 'projects.html');
+      } catch (err) {
+        errTxt.textContent  = err.message || 'Sign in failed. Please try again.';
+        errEl.style.display = 'flex';
+        btn.disabled = false;
+        btn.querySelector('.lf-btn-label').textContent   = 'Sign In';
+        btn.querySelector('.lf-btn-arrow').style.display = '';
+        btn.querySelector('.lf-btn-spin').style.display  = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

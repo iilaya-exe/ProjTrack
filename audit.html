@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Log &mdash; ABI Project Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a class="header-logo-link" href="projects.html" title="All Projects">
+          <img class="header-logo" src="Abi-Horizontal-Stack-Full-Color-RGB-1064px_72ppi-removebg-preview.png" alt="Actuate Builders Inc." />
+        </a>
+        <div class="header-logo-divider"></div>
+        <div>
+          <div class="header-title">Audit Log</div>
+          <div class="header-subtitle">Change trail for all procurement actions</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <a href="projects.html" class="nav-link-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          All Projects
+        </a>
+        <span class="header-badge">AUDIT</span>
+        <span class="current-date" id="current-date"></span>
+        <div class="auth-slot" id="auth-slot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container" style="padding-top: 28px; padding-bottom: 48px;">
+
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+      <h1 style="font-size:1.25rem;font-weight:700;margin:0;">Change History</h1>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;">
+        <select class="filter-select" id="filter-project" style="min-width:180px;">
+          <option value="">All Projects</option>
+        </select>
+        <select class="filter-select" id="filter-action">
+          <option value="">All Actions</option>
+          <option value="create">Created</option>
+          <option value="update">Updated</option>
+          <option value="delete">Deleted</option>
+        </select>
+        <button class="btn" id="refresh-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,4 23,11 16,11"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 11"/></svg>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <div id="audit-log-wrap">
+      <div style="text-align:center;padding:60px 20px;color:var(--text-muted);">Loading&hellip;</div>
+    </div>
+
+    <div id="audit-pagination" style="display:flex;justify-content:center;gap:10px;margin-top:20px;"></div>
+
+  </main>
+
+  <footer class="site-footer">
+    ABI Project Tracker &mdash; Audit Log &nbsp;&bull;&nbsp; <a href="projects.html" style="color:var(--text-light);text-decoration:none;">All Projects &rarr;</a>
+  </footer>
+
+  <script src="js/backend.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/audit-admin.js"></script>
+</body>
+</html>
