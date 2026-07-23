@@ -32,7 +32,7 @@ const LocalDB = (function () {
   };
 
   const SESSION_LIFETIME = 8 * 3600; // seconds — sliding (refreshed on every `me`/`ping`)
-  const DEFAULT_PROJECT_ID = 'bsmh-phase2';
+  const DEFAULT_PROJECT_ID = 'aurora-hq';
 
   /* ── Item field list (mirrors the former ITEM_FIELDS in api.php) ── */
   const ITEM_FIELDS = [
@@ -81,25 +81,148 @@ const LocalDB = (function () {
         last_login: null,
       }]);
     }
-    if (!localStorage.getItem(KEY.projects)) {
-      write(KEY.projects, [{
-        id: DEFAULT_PROJECT_ID,
-        name: 'BSMH Phase 2',
-        code: 'BSMH-P2',
-        client: '',
-        status: 'active',
-        total_budget: 0,
-        start_date: '',
-        notes: '',
-        color_index: 0,
-        no_need_commercial_endorsement: 0,
-        is_default: 1,
-        created_at: nowIso(),
-      }]);
-    }
-    if (!localStorage.getItem(KEY.items))  write(KEY.items, []);
-    if (!localStorage.getItem(KEY.audit))  write(KEY.audit, []);
+    if (!localStorage.getItem(KEY.projects)) write(KEY.projects, DEMO_PROJECTS);
+    if (!localStorage.getItem(KEY.items))    write(KEY.items, buildDemoItems());
+    if (!localStorage.getItem(KEY.audit))    write(KEY.audit, []);
     write(KEY.seeded, true);
+  }
+
+  /* ── Demo seed data (fictional) ──────────────────────────────────
+     Two sample projects so the tracker, dashboard, filters, and stats
+     all have something to show on first run. Delete localStorage (or
+     the projects/items keys) to re-seed. */
+  const DEMO_PROJECTS = [
+    {
+      id: DEFAULT_PROJECT_ID,
+      name: 'Aurora Corporate HQ — Interior Fit-Out',
+      code: 'AUR-HQ',
+      client: 'Northwind Holdings',
+      status: 'active',
+      total_budget: 58000000,
+      start_date: '02/17/2026',
+      notes: '12-storey headquarters interior fit-out. Target turnover Q4 2026.',
+      color_index: 0,
+      no_need_commercial_endorsement: 0,
+      is_default: 1,
+      created_at: '2026-02-17T08:00:00.000Z',
+    },
+    {
+      id: 'meridian-p1',
+      name: 'Meridian Retail Center — Phase 1',
+      code: 'MER-P1',
+      client: 'Crescent Malls Group',
+      status: 'planning',
+      total_budget: 28000000,
+      start_date: '06/02/2026',
+      notes: 'Ground-floor retail shell & core, plus anchor tenant fit-out.',
+      color_index: 4,
+      no_need_commercial_endorsement: 0,
+      is_default: 0,
+      created_at: '2026-06-02T08:00:00.000Z',
+    },
+  ];
+
+  function buildDemoItems() {
+    const mk = (pid, arr) => arr.map(it => Object.assign({ project_id: pid, no: it.no }, blankItemFields(it)));
+
+    const aurora = mk(DEFAULT_PROJECT_ID, [
+      { no: 1, trade: 'Preliminaries', scope: 'Site mobilization, temporary facilities & safety provisions',
+        budget: 1800000, endorsed_vendor: 'BuildRight Services Inc.', endorsement_date: '03/05/2026',
+        endorsed_amount: 1750000, savings_budget_endorsed: 50000, vendor_timeline: '3 weeks',
+        date_needed: '03/20/2026', approved_vendor: 'BuildRight Services Inc.', priority: 'HIGH',
+        awarded_vendor: 'BuildRight Services Inc.', pr_no: 'PR-2026-001', negotiated_proposal: 1750000,
+        po_amount: 1750000, date_of_po: '03/12/2026', po_no: 'PO-2026-0101', date_issuance_po: '03/13/2026',
+        savings_endorsed_po: 0, invoice_no: 'INV-3321', invoice_date: '05/04/2026' },
+
+      { no: 2, trade: 'Civil / Architectural', scope: 'Concrete works, masonry partitions & wet-area waterproofing',
+        budget: 8200000, endorsed_vendor: 'Cornerstone Builders Corp.', endorsement_date: '03/18/2026',
+        endorsed_amount: 7950000, savings_budget_endorsed: 250000, vendor_timeline: '10 weeks',
+        date_needed: '04/15/2026', approved_vendor: 'Cornerstone Builders Corp.', priority: 'HIGH',
+        awarded_vendor: 'Cornerstone Builders Corp.', pr_no: 'PR-2026-004', negotiated_proposal: 7900000,
+        po_amount: 7850000, date_of_po: '03/28/2026', po_no: 'PO-2026-0107', date_issuance_po: '03/30/2026',
+        savings_endorsed_po: 100000, invoice_no: 'INV-3410', invoice_date: '06/12/2026', po_remarks: '30% downpayment released' },
+
+      { no: 3, trade: 'Flooring & Finishes', scope: 'Porcelain tile, engineered timber & carpet tile supply/install',
+        budget: 5600000, endorsed_vendor: 'FinishLine Interiors', endorsement_date: '04/22/2026',
+        endorsed_amount: 5480000, savings_budget_endorsed: 120000, vendor_timeline: '8 weeks',
+        date_needed: '08/05/2026', approved_vendor: 'FinishLine Interiors', priority: 'MEDIUM' },
+
+      { no: 4, trade: 'Partition & Drywall', scope: 'Metal-stud drywall partitions & acoustic ceiling systems',
+        budget: 4300000, date_needed: '08/20/2026', priority: 'MEDIUM', remarks: 'Awaiting revised layout from design team' },
+
+      { no: 5, trade: 'Mechanical (VRV / HVAC)', scope: 'VRV system, ducting & ventilation for all floors',
+        budget: 9800000, endorsed_vendor: 'ThermoCool Systems Inc.', endorsement_remarks: 'LONG LEAD ITEMS',
+        endorsement_date: '03/25/2026', endorsed_amount: 9650000, savings_budget_endorsed: 150000,
+        vendor_timeline: '16 weeks (imported units)', date_needed: '07/30/2026', approved_vendor: 'ThermoCool Systems Inc.',
+        priority: 'HIGH', dp_required: 'Yes', downpayment: '40% on PO' },
+
+      { no: 6, trade: 'Fire Protection', scope: 'Sprinkler network, FDAS & fire pumps',
+        budget: 3900000, endorsed_vendor: 'Sentinel Fire & Safety', endorsement_date: '04/02/2026',
+        endorsed_amount: 3820000, savings_budget_endorsed: 80000, vendor_timeline: '7 weeks',
+        date_needed: '07/10/2026', approved_vendor: 'Sentinel Fire & Safety', priority: 'HIGH',
+        awarded_vendor: 'Sentinel Fire & Safety', pr_no: 'PR-2026-011', negotiated_proposal: 3800000,
+        po_amount: 3780000, date_of_po: '04/14/2026', po_no: 'PO-2026-0119', date_issuance_po: '04/15/2026',
+        savings_endorsed_po: 40000 },
+
+      { no: 7, trade: 'Electrical', scope: 'Power distribution, panel boards & lighting rough-in',
+        budget: 7200000, endorsed_vendor: 'Voltaic Power Contractors', endorsement_remarks: 'LONG LEAD ITEMS',
+        endorsement_date: '04/08/2026', endorsed_amount: 7100000, savings_budget_endorsed: 100000,
+        vendor_timeline: '14 weeks (switchgear lead time)', date_needed: '08/15/2026',
+        approved_vendor: 'Voltaic Power Contractors', priority: 'HIGH' },
+
+      { no: 8, trade: 'Joinery / Millwork', scope: 'Reception desk, pantry cabinetry & bespoke wall panels',
+        budget: 4100000, endorsed_vendor: 'Artisan Woodcraft Studio', endorsement_date: '05/06/2026',
+        endorsed_amount: 3980000, savings_budget_endorsed: 120000, vendor_timeline: '9 weeks',
+        date_needed: '09/12/2026', approved_vendor: 'Artisan Woodcraft Studio', priority: 'MEDIUM',
+        awarded_vendor: 'Artisan Woodcraft Studio', pr_no: 'PR-2026-018', negotiated_proposal: 3960000,
+        po_amount: 3960000, date_of_po: '05/18/2026', po_no: 'PO-2026-0131', date_issuance_po: '05/20/2026',
+        savings_endorsed_po: 20000, po_remarks: 'Invoice pending final measurement' },
+
+      { no: 9, trade: 'Signage & Wayfinding', scope: 'Exterior building signage, floor directories & room signs',
+        budget: 1400000, date_needed: '10/01/2026', priority: 'LOW' },
+
+      { no: 10, trade: 'Auxiliary / ELV Systems', scope: 'Structured cabling, CCTV, access control & PA system',
+        budget: 3600000, endorsed_vendor: 'ConnectPro Technologies', endorsement_date: '05/12/2026',
+        endorsed_amount: 3520000, savings_budget_endorsed: 80000, vendor_timeline: '8 weeks',
+        date_needed: '09/25/2026', approved_vendor: 'ConnectPro Technologies', priority: 'MEDIUM',
+        awarded_vendor: 'ConnectPro Technologies', pr_no: 'PR-2026-021', negotiated_proposal: 3500000,
+        po_amount: 3500000, date_of_po: '05/26/2026', po_no: 'PO-2026-0138', date_issuance_po: '05/27/2026',
+        savings_endorsed_po: 20000 },
+
+      { no: 11, trade: 'Special Finishes', scope: 'Glass partitions, feature metal cladding & stone accents',
+        budget: 2900000, endorsed_vendor: 'Lumina Facade Works', endorsement_date: '06/03/2026',
+        endorsed_amount: 2850000, savings_budget_endorsed: 50000, vendor_timeline: '6 weeks',
+        date_needed: '09/30/2026', approved_vendor: 'Lumina Facade Works', priority: 'MEDIUM' },
+
+      { no: 12, trade: 'Doors & Ironmongery', scope: 'Fire-rated doors, glass doors & architectural hardware',
+        budget: 1900000, date_needed: '10/10/2026', priority: 'LOW', remarks: 'For endorsement next cycle' },
+    ]);
+
+    const meridian = mk('meridian-p1', [
+      { no: 1, trade: 'Preliminaries', scope: 'Site clearing, hoarding & temporary utilities',
+        budget: 1200000, endorsed_vendor: 'Crescent Site Works', endorsement_date: '06/16/2026',
+        endorsed_amount: 1180000, savings_budget_endorsed: 20000, vendor_timeline: '2 weeks',
+        date_needed: '08/01/2026', approved_vendor: 'Crescent Site Works', priority: 'HIGH' },
+
+      { no: 2, trade: 'Structural Retrofit', scope: 'Column jacketing & slab reinforcement for retail loads',
+        budget: 6800000, date_needed: '09/05/2026', priority: 'HIGH', remarks: 'Pending structural engineer sign-off' },
+
+      { no: 3, trade: 'Storefront / Curtain Wall', scope: 'Aluminium & glazed storefront system for mall frontage',
+        budget: 7500000, endorsed_vendor: 'ClearView Glazing Corp.', endorsement_remarks: 'LONG LEAD ITEMS',
+        endorsement_date: '06/28/2026', endorsed_amount: 7380000, savings_budget_endorsed: 120000,
+        vendor_timeline: '15 weeks (imported profiles)', date_needed: '08/12/2026',
+        approved_vendor: 'ClearView Glazing Corp.', priority: 'HIGH' },
+
+      { no: 4, trade: 'MEP Rough-in', scope: 'Mechanical, electrical & plumbing rough-in for shell units',
+        budget: 5400000, date_needed: '09/20/2026', priority: 'MEDIUM' },
+
+      { no: 5, trade: 'Interior Fit-Out', scope: 'Anchor tenant fit-out — flooring, ceiling & partitions',
+        budget: 4600000, endorsed_vendor: 'Metro Interiors Group', endorsement_date: '07/07/2026',
+        endorsed_amount: 4520000, savings_budget_endorsed: 80000, vendor_timeline: '10 weeks',
+        date_needed: '10/15/2026', approved_vendor: 'Metro Interiors Group', priority: 'MEDIUM' },
+    ]);
+
+    return aurora.concat(meridian);
   }
 
   /* ── HttpError — thrown to short-circuit a handler with a status code ── */

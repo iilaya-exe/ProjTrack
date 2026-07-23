@@ -10,7 +10,7 @@
 const ProjectStore = {
 
   API:        'php/api.php',
-  DEFAULT_ID: 'bsmh-phase2',
+  DEFAULT_ID: 'aurora-hq',
 
   PALETTE: [
     { accent: '#2563a8', light: '#eff6ff' },
