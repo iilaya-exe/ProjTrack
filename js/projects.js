@@ -718,7 +718,7 @@ async function loadUsersModal() {
   const body = document.getElementById('users-body');
   body.innerHTML = '<div style="padding:24px;color:#6b7280;text-align:center">Loading users&hellip;</div>';
   try {
-    const res  = await LocalDB.fetch('php/auth.php?action=get_users');
+    const res  = await fetch('php/auth.php?action=get_users');
     if (res.status === 401) { Auth.sessionExpired(); return; }
     const json = await res.json();
     if (!json.success) throw new Error(json.error);
@@ -816,7 +816,7 @@ async function saveNewUser() {
     role:      document.getElementById('uf-role').value,
   };
   try {
-    const res  = await LocalDB.fetch('php/auth.php?action=create_user', {
+    const res  = await fetch('php/auth.php?action=create_user', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body),
     });
     if (res.status === 401) { Auth.sessionExpired(); return; }
@@ -858,7 +858,7 @@ async function saveEditUser() {
   const body     = { id, full_name: fullName, role };
   if (pw) body.password = pw;
   try {
-    const res  = await LocalDB.fetch('php/auth.php?action=update_user', {
+    const res  = await fetch('php/auth.php?action=update_user', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body),
     });
     if (res.status === 401) { Auth.sessionExpired(); return; }
@@ -875,7 +875,7 @@ async function deleteUser(id, username) {
   if (!Auth.can('admin')) return;
   if (!confirm(`Delete user "${username}"? This cannot be undone.`)) return;
   try {
-    const res  = await LocalDB.fetch('php/auth.php?action=delete_user', {
+    const res  = await fetch('php/auth.php?action=delete_user', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ id }),
     });
     if (res.status === 401) { Auth.sessionExpired(); return; }

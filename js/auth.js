@@ -15,7 +15,7 @@ const Auth = {
      Returns the user object on success, null if redirecting. */
   async init() {
     try {
-      const res  = await LocalDB.fetch('php/auth.php?action=me');
+      const res  = await fetch('php/auth.php?action=me');
       const json = await res.json().catch(() => null);
       if (!json || !json.success) { this._toLogin(); return null; }
       this.user = json.data;
@@ -61,7 +61,7 @@ const Auth = {
 
   async _keepAlive() {
     try {
-      const res  = await LocalDB.fetch('php/auth.php?action=ping', { method: 'POST' });
+      const res  = await fetch('php/auth.php?action=ping', { method: 'POST' });
       const json = await res.json().catch(() => null);
       if (!json || !json.success) { this.sessionExpired(); return; }
       this._dismissSessionWarning();
@@ -98,7 +98,7 @@ const Auth = {
   },
 
   async logout() {
-    try { await LocalDB.fetch('php/auth.php?action=logout', { method: 'POST' }); } catch {}
+    try { await fetch('php/auth.php?action=logout', { method: 'POST' }); } catch {}
     window.location.replace('login.html');
   },
 
@@ -176,7 +176,7 @@ const Auth = {
       errEl.style.display = ''; return;
     }
     try {
-      const res  = await LocalDB.fetch('php/auth.php?action=change_password', {
+      const res  = await fetch('php/auth.php?action=change_password', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ current_password: current, new_password: newpw }),
       });
