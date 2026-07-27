@@ -52,7 +52,7 @@ async function loadAuditLog() {
   if (filterProject) params.set('project_id', filterProject);
 
   try {
-    const res  = await fetch('php/api.php?' + params);
+    const res  = await LocalDB.fetch('php/api.php?' + params);
     if (res.status === 401) { Auth.sessionExpired(); return; }
     if (res.status === 403) { wrap.innerHTML = '<div class="hist-error">Access denied. Editor or admin access required.</div>'; return; }
     const json = await res.json();
@@ -188,7 +188,7 @@ function goPage(n) {
 
 async function loadProjectFilter() {
   try {
-    const res  = await fetch('php/api.php?action=get_projects');
+    const res  = await LocalDB.fetch('php/api.php?action=get_projects');
     const json = await res.json();
     if (!json.success) return;
     const sel = document.getElementById('filter-project');

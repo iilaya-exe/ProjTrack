@@ -1,7 +1,8 @@
 'use strict';
 
 /* ============================================================
-   ProjectStore — data layer backed by php/api.php + MySQL.
+   ProjectStore — data layer backed by LocalDB (js/backend.js),
+   a localStorage-based emulator of the former php/api.php.
    All read/write operations are async (return Promises).
    Sync helpers (computeStats, blankItem, fmtPeso, fmtDate,
    generateId, getUrlId, PALETTE, STATUS_MAP) are unchanged.
@@ -9,7 +10,7 @@
 const ProjectStore = {
 
   API:        'php/api.php',
-  DEFAULT_ID: 'bsmh-phase2',
+  DEFAULT_ID: 'aurora-hq',
 
   PALETTE: [
     { accent: '#2563a8', light: '#eff6ff' },
@@ -46,7 +47,7 @@ const ProjectStore = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body) }
       : { method: 'GET' };
-    const res  = await fetch(url, opt);
+    const res  = await LocalDB.fetch(url, opt);
     if (res.status === 401) {
       Auth.sessionExpired();
       return new Promise(() => {}); // never resolves — overlay covers the page, callers must not proceed

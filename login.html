@@ -137,10 +137,11 @@
     </div>
   </div>
 
+  <script src="js/backend.js"></script>
   <script>
     'use strict';
 
-    fetch('php/auth.php?action=me')
+    LocalDB.fetch('php/auth.php?action=me')
       .then(r => r.json())
       .then(j => {
         if (j && j.success) {
@@ -181,7 +182,7 @@
       btn.querySelector('.lf-btn-spin').style.display  = '';
 
       try {
-        const res  = await fetch('php/auth.php?action=login', {
+        const res  = await LocalDB.fetch('php/auth.php?action=login', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({ username, password }),
